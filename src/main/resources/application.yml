@@ -1,1 +1,56 @@
-spring.application.name=course
+server:
+  port: 2244
+
+jwt:
+  secret: aziz-secret-key
+  lifetime: 30m
+
+spring:
+  application:
+    name: course
+  profiles:
+    active: ${ACTIVE_PROFILE:dev}
+  datasource:
+    url: jdbc:postgresql://localhost:5433/course_db
+    username: user_db
+    password: pass_db
+    driver-class-name: org.postgresql.Driver
+  sql:
+    init:
+      mode: always
+      platform: postgresql
+  jpa:
+    hibernate:
+      ddl-auto: create
+    database: postgresql
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+  mvc:
+    log-request-details: true
+  mail:
+    host: ${EMAIL_HOST}
+    port: ${EMAIL_PORT}
+    username: ${EMAIL_ID}
+    password: ${EMAIL_PASSWORD}
+    default-encoding: UTF-8
+    properties:
+      mail:
+        mime:
+          charset: UTF
+        smtp:
+          writetimeout: 10000
+          connectiontimeout: 10000
+          timeout: 10000
+          auth: true
+          starttls:
+            enable: true
+            required: true
+    verify:
+      host: ${VERIFY_EMAIL_HOST}
+
+  logging:
+    level:
+      org.springframework.web: debug
+      org.hibernate.SQL: INFO
+      org:
+        springframework:
+          security: DEBUG

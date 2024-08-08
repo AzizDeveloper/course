@@ -1,0 +1,17 @@
+#Database
+POSTGRES_SQL_USERNAME: user_db
+POSTGRES_SQL_PASSWORD: pass_db
+POSTGRES_SQL_HOST: postgresql
+POSTGRES_SQL_PORT: 5433
+POSTGRES_SQL_DB: course_db
+
+#Server
+SERVER_PORT: 2244
+ACTIVE_PROFILE: dev
+
+#Email Config
+EMAIL_HOST: smtp.gmail.com
+EMAIL_PORT: 587
+EMAIL_ID: Enter your email address
+EMAIL_PASSWORD: Enter your app password, not your email password
+VERIFY_EMAIL_HOST: http://localhost:${SERVER_PORT}/auth
