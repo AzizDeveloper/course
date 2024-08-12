@@ -27,7 +27,6 @@ public class UserController {
 
     private final UserService userService;
     private final UserRepository userRepository;
-// TODO: Maybe I need another DTO for representing users in admin panel
 
     @GetMapping
     public ResponseEntity<List<UserSummaryDto>> getAllUsers() {
