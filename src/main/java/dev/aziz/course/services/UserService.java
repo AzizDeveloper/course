@@ -1,7 +1,5 @@
 package dev.aziz.course.services;
 
-import com.auth0.jwt.JWT;
-import com.auth0.jwt.algorithms.Algorithm;
 import dev.aziz.course.config.PasswordConfig;
 import dev.aziz.course.config.UserAuthProvider;
 import dev.aziz.course.dtos.CredentialsDto;
@@ -19,23 +17,18 @@ import dev.aziz.course.repositories.ConfirmationRepository;
 import dev.aziz.course.repositories.CourseRepository;
 import dev.aziz.course.repositories.RoleRepository;
 import dev.aziz.course.repositories.UserRepository;
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.http.HttpStatus;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.nio.CharBuffer;
-import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
-//@RequiredArgsConstructor
 @Service
 @Slf4j
 public class UserService {
@@ -49,7 +42,6 @@ public class UserService {
     private final UserAuthProvider userAuthProvider;
     private final PasswordEncoder passwordEncoder;
     private final PasswordConfig passwordConfig;
-
 
 
     @Autowired
@@ -138,13 +130,19 @@ public class UserService {
         return userDtos;
     }
 
-    public UserSummaryDto getUserById(Long id) {
+    public UserSummaryDto getUserById(Long id, UserDto userDto) {
+        boolean isAdmin = userDto.getRoles().stream().anyMatch(role -> role.getName().equals("ADMIN"));
+        if (id.longValue() != userDto.getId()) {
+            if (!isAdmin) {
+                throw new AppException("You do not have correct role or you are not this user", HttpStatus.FORBIDDEN);
+            }
+        }
         return userMapper.toUserSummaryDto(userRepository.findById(id)
                 .orElseThrow(() -> new AppException("User not found.", HttpStatus.NOT_FOUND)));
     }
 
     public void deleteUserById(Long id) {
-        getUserById(id);
+        userRepository.findById(id).orElseThrow(() -> new AppException("User not found.", HttpStatus.NOT_FOUND));
         userRepository.deleteById(id);
     }
 

@@ -6,8 +6,6 @@ import dev.aziz.course.dtos.SignUpDto;
 import dev.aziz.course.dtos.UserDto;
 import dev.aziz.course.services.UserService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.context.annotation.Lazy;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.context.SecurityContextHolder;

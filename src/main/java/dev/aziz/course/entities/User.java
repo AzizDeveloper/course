@@ -39,9 +39,6 @@ public class User {
     @NotNull(message = "Firstname should not be empty")
     private String firstName;
 
-//    @NotNull(message = "Lastname should not be empty")
-//    private String lastName;
-
     @NotNull(message = "Phone number should not be empty")
     private String phoneNumber;
 
